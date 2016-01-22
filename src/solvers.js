@@ -335,14 +335,8 @@ var getNQueensBoards = function(n) {
         boardState[currentRow + i][currentColumn + i] = -1;
       }
     }
-
-    var faultyRow = true;
-    for(var i = 0; faultyRow && i < n; i++){
-      if(boardState[currentRow][i] !== -1){
-        faultyRow = false;
-      }
-    }
-    if(faultyRow){
+    
+    if(!placed){
       if(!lastBoardStates.length){
           return solutions;
       }
