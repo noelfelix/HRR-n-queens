@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>n-rooks solver</title>
+    <title>n-queens viewer</title>
     <style type="text/css">
       .square {
         width: 30px;
@@ -20,9 +20,14 @@
       .inConflict{
           background-color: red;
       }
+
+      table{
+        border: 1px solid black;
+      }
     </style>
   </head>
   <body>
+    <div id='boards'><div>
     <script src="lib/jquery-1.8.3.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="lib/backbone.js"></script>
@@ -31,28 +36,25 @@
     <script src="src/solvers.js"></script>
     <script>
       // This function uses a board visualizer lets you view an interactive version of any piece matrix.
+      $('body').prepend("<p>How many queens: </p><button class='qButton'>1</button><button class='qButton'>2</button><button class='qButton'>3</button><button class='qButton'>4</button><button class='qButton'>5</button><button class='qButton'>6</button><button class='qButton'>7</button><button class='qButton'>8</button>");
+      $('.qButton').on('click', function(){
+        $('#boards').empty();
+        getBoards(parseInt(this.textContent));
+      });
       window.displayBoard = function(matrix){
-        $('body').html(
+        $('#boards').append(
           new BoardView({
             model: new Board(matrix)
           }).render()
         );
       };
-      $(function(){
+      var getBoards = function(n){
         // this is a pre-baked solution for n-queens in the n = 4 case, rendered to the screen using our handy visualizer.
-        displayBoard([
-          [0, 1, 0, 0],
-          [0, 0, 0, 1],
-          [1, 0, 0, 0],
-          [0, 0, 1, 0]
-        ]);
-
-        var n = 4;
-        findNRooksSolution(n);
-        countNRooksSolutions(n);
-        findNQueensSolution(n);
-        countNQueensSolutions(n);
-      });
+        var boards = getNQueensBoards(n);
+        for(var key in boards){
+          displayBoard(boards[key]);
+        }
+      };
     </script>
   </body>
 </html>
